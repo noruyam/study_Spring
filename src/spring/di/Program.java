@@ -1,10 +1,9 @@
-package spring;
+package spring.di;
 
 import spring.di.Exam;
 import spring.di.ui.ExamConsole;
 import spring.di.ui.GridExamConsole;
-import spring.di.ui.InlineExamConsole;
-import spring.entity.NewlecExam;
+import spring.di.entity.NewlecExam;
 
 public class Program {
     public static void main(String[] args) {

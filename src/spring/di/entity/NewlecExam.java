@@ -1,4 +1,4 @@
-package spring.entity;
+package spring.di.entity;
 
 import spring.di.Exam;
 
