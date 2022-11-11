@@ -29,7 +29,7 @@ console.setExam(exam);
 console.print();
 ```
 
-### 3. xml에서 bean 등록하여 사용하는 방법
+### 3. IoC(Inversion of Control) Container 에 bean 등록하여 사용하는 방법
 
 * pom.xml   
   메이븐 프로젝트로 변경 후 pom.xml에 ApplicationContext을 사용하기위한 dependency를 등록해준다.(https://mvnrepository.com/)
@@ -43,6 +43,7 @@ console.print();
 
 * setting.xml   
   사용하기 위한 class를 bean으로 등록해 준다. 여기서 `<property>` 를 통해 의존관계를 설정해 줄 수 있다.
+
 ```
 <!--Exam exam = new NewlecExam();-->
 <bean id="exam" class="spring.di.entity.NewlecExam"/>
@@ -53,7 +54,19 @@ console.print();
   <property name="exam"  ref="exam"/>
 </bean>
 ```
-
+* GridExamConsole.java   
+  ※ExamConsole 을 상속한 GridExamConsole 클래스에 기본 생성자와 setter가 있어야만 bean등록이 된다.
+```java
+public class GridExamConsole implements ExamConsole {
+  public GridExamConsole() {}
+  private Exam exam;
+  @Override
+  public void setExam(Exam exam) {
+      this.exam = exam;
+  }
+  ...
+}
+```
 * main.java   
   ApplicationContext 생성할 때 위에서 bean을 설정한 setting.xml을 통해서 생성해 주면 xml에 등록된 bean name을 가지고 사용 가능해진다.
 ```java
@@ -63,3 +76,8 @@ ExamConsole console = context.getBean(ExamConsole.class);
 console.print();
 ```
 ---
+
+## IoC(Inversion of Control) Container
+Bean은 개발자가 IoC에 등록한 객체들이다.   
+IoC Container는 Bean의 관리를 도와주는 컨테이너이다.   
+Bean을 생성해서 Container에 등록하여 IoC 방식으로 운영하는 것이 많은 이점이 있기 때문에 존재한다.

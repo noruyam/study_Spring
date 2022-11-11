@@ -1,5 +1,19 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij
+target
+build
+*~
+*.log
+.classpath
+.project
+*.ipr
+*.iws
+*.iml
+.settings
+.git
+.svn
+*.class
+*.bak
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -115,3 +129,4 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
+/.metadata/
