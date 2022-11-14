@@ -3,14 +3,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+<!--    <context:annotation-config/> 밑에 코드가 있으면 더 이상 필요가 없다. -->
+    <!-- XML Configuration을 Java Configuration 변경
+    <context:component-scan base-package="spring.di.ui,spring.di.entity"/>
+    -->
+<!--    ■ => 기존 xml방식에서 어노테이션으로 바꿔보자-->
 
     <!--Exam exam = new NewlecExam();-->
     <!-- 3. p태그로 설정 방법-->
     <!--    <bean id="exam" class="spring.di.entity.NewlecExam" p:kor="10" p:eng="20" p:com="40" p:math="30"/>-->
 
-    <bean id="exam" class="spring.di.entity.NewlecExam">
+<!--    <bean class="spring.di.entity.NewlecExam">  어노테이션을 쓰면 중복된 bean값을 구분해주기 위해 id값이 Qualifier 이 된다-->
+
+    <!--@Autowired(required = false) // xml에서 exam이 없어도 일단 OK!
+    <bean id="exam1" class="spring.di.entity.NewlecExam"/>
+    <bean id="exam2" class="spring.di.entity.NewlecExam"/>
+    -->
         <!--
         1. 값형식 property 설정 방법
         <property name="kor" >
@@ -20,25 +33,23 @@
         <property name="math" value="20"/>
         <property name="com" value="40"/>
         -->
-        <!-- 2. 생성자를 통한 설정 방법-->
+        <!-- 2. 생성자를 통한 설정 방법
         <constructor-arg name="kor" value="10"/>
         <constructor-arg index="1" value="20"/>
         <constructor-arg index="3" value="30"/>
         <constructor-arg index="2" value="40"/>
-
-    </bean>
+        </bean>
+        -->
 
     <!--ExamConsole console = new GridExamConsole(exam);-->
+    <!--
     <bean id="console" class="spring.di.ui.InlineExamConsole">
-        <!--console.setExam(exam);-->
+        &lt;!&ndash;console.setExam(exam);
+        ■ @Autowired
         <property name="exam" ref="exam"/>
+        &ndash;&gt;
     </bean>
-
-    <!--2. 객체 xml에서 직접 만드는 방법-->
-    <util:list id="exams" list-class="java.util.ArrayList">
-        <bean class="spring.di.entity.NewlecExam" p:kor="1" p:eng="2" p:com="4" p:math="3"/>
-        <ref bean="exam"/>
-    </util:list>
+    -->
 
     <!-- 1. 객체만드는 방법
     <bean id="exams" class="java.util.ArrayList">
@@ -50,4 +61,9 @@
         </constructor-arg>
     </bean>
     -->
+    <!--2. 객체 xml에서 직접 만드는 방법-->
+   <!-- <util:list id="exams" list-class="java.util.ArrayList">
+        <bean class="spring.di.entity.NewlecExam" p:kor="1" p:eng="2" p:com="4" p:math="3"/>
+        <ref bean="exam"/>
+    </util:list>-->
 </beans>

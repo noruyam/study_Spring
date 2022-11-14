@@ -1,8 +1,10 @@
 package spring.di.ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import spring.di.Exam;
 
 public class GridExamConsole implements ExamConsole {
+
     private Exam exam;
 
     public GridExamConsole() {
@@ -22,6 +24,7 @@ public class GridExamConsole implements ExamConsole {
         System.out.println(exam.avg());
     }
 
+    @Autowired
     @Override
     public void setExam(Exam exam) {
         this.exam = exam;

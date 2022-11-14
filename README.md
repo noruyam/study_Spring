@@ -75,6 +75,36 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/setti
 ExamConsole console = context.getBean(ExamConsole.class);
 console.print();
 ```
+
+### 4. 어노테이션을 사용한 방법 
+
+```xml
+<!--setting.xml에 어노테이션을 사용한다는 코드를 우선 선언한다.-->
+<context:annotation-config/>
+
+<bean id="console" class="spring.di.ui.InlineExamConsole">
+<!--console.setExam(exam);-->
+<!--■ 해당 부분을 지우고 해당 setter에 @Autowired-->
+<!--property name="exam" ref="exam"/-->
+</bean>
+
+<!--@Qualifier("exam2") // xml에 id값을 매칭해준다.-->
+<bean id="exam1" class="spring.di.entity.NewlecExam"/>
+<bean id="exam2" class="spring.di.entity.NewlecExam"/>
+```
+
+```java
+@Autowired // xml에 값을 지우고 대응되는 곳에 어노테이션을 사용한다. 
+@Qualifier("exam2") // xml에 id값을 매칭해준다.
+@Override
+public void setExam(Exam exam) {
+    this.exam = exam;
+}
+```
+
+
+
+
 ---
 
 ## IoC(Inversion of Control) Container
