@@ -1,14 +1,12 @@
 # study_Spring
-# DI(dependency Injection)
+# DI(dependency Injection) 종속성 주입
 
-
-## DI(dependency Injection) 종속성 주입
 DI란 외부에서 두 객체 간의 관계를 결정해주는 디자인 패턴으로,   
 인터페이스를 사이에 둬서 클래스 레벨에서는 의존관계가 고정되지 않도록 하고   
 런타임 시에 관계를 동적으로 주입하여 유연성을 확보하고 결합도를 낮출 수 있게 해준다.   
 의존관계를 주입해주는 여러가지 방법중 몇가지를 살펴보도록 한다.
 
-### 1. 생성자 주입 방법
+## 1. 생성자 주입 방법
 ```java
 Exam exam = new NewlecExam();
 /*
@@ -21,7 +19,7 @@ ExamConsole이라는 중간 인터페이스를 놓고 클래스를 생성하도�
 ExamConsole console = new GridExamConsole(exam);
 console.print();
 ```
-### 2. setter 주입방법
+## 2. setter 주입방법
 ```java
 Exam exam = new NewlecExam();
 ExamConsole console = new GridExamConsole();
@@ -29,7 +27,7 @@ console.setExam(exam);
 console.print();
 ```
 
-### 3. IoC(Inversion of Control) Container 에 bean 등록하여 사용하는 방법
+## 3. IoC(Inversion of Control) Container 에 bean 등록하여 사용하는 방법
 
 * pom.xml   
   메이븐 프로젝트로 변경 후 pom.xml에 ApplicationContext을 사용하기위한 dependency를 등록해준다.(https://mvnrepository.com/)
@@ -76,7 +74,7 @@ ExamConsole console = context.getBean(ExamConsole.class);
 console.print();
 ```
 
-### 4. 어노테이션을 사용한 방법 (XML Configuration 방식을 Java Configuration방식으로 변경)
+## 4. 어노테이션을 사용한 방법 (XML Configuration 방식을 Java Configuration방식으로 변경)
 
 ```xml
 <!--setting.xml에 어노테이션을 사용한다는 코드를 우선 선언한다.-->
@@ -135,7 +133,7 @@ public class NewlecDIConfig {
 
 ---
 
-## IoC(Inversion of Control) Container
+# IoC(Inversion of Control) Container
 Bean은 개발자가 IoC에 등록한 객체들이다.   
 IoC Container는 Bean의 관리를 도와주는 컨테이너이다.   
 Bean을 생성해서 Container에 등록하여 IoC 방식으로 운영하는 것이 많은 이점이 있기 때문에 존재한다.
