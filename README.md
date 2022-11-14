@@ -76,12 +76,12 @@ ExamConsole console = context.getBean(ExamConsole.class);
 console.print();
 ```
 
-### 4. 어노테이션을 사용한 방법 
+### 4. 어노테이션을 사용한 방법 (XML Configuration 방식을 Java Configuration방식으로 변경)
 
 ```xml
 <!--setting.xml에 어노테이션을 사용한다는 코드를 우선 선언한다.-->
 <context:annotation-config/>
-
+<context:component-scan base-package="spring.di.ui,spring.di.entity"/>
 <bean id="console" class="spring.di.ui.InlineExamConsole">
 <!--console.setExam(exam);-->
 <!--■ 해당 부분을 지우고 해당 setter에 @Autowired-->
@@ -94,15 +94,43 @@ console.print();
 ```
 
 ```java
-@Autowired // xml에 값을 지우고 대응되는 곳에 어노테이션을 사용한다. 
-@Qualifier("exam2") // xml에 id값을 매칭해준다.
-@Override
-public void setExam(Exam exam) {
+@Component("console") //<context:component-scan base-package="spring.di.ui,spring.di.entity"/> 에 대응된다 
+public class InlineExamConsole implements ExamConsole {
+
+  @Autowired // xml에 값을 지우고 대응되는 곳에 어노테이션을 사용한다. 
+  @Qualifier("exam2") // xml에 id값을 매칭해준다.
+  @Override
+  public void setExam(Exam exam) {
     this.exam = exam;
+  }
 }
 ```
 
+* xml파일을 없애버리는 방법
 
+```java
+public class Program {
+  public static void main(String[] args) {
+    ApplicationContext context = new AnnotationConfigApplicationContext(NewlecDIConfig.class);
+    //xml에 <context:annotation-config/>를 지우면서 작동안되는데 @Component("console") 이름을 넣어줘야함
+    ExamConsole console = (ExamConsole) context.getBean("console"); 
+  }
+}
+
+----------------------------------------------------------------------
+
+@ComponentScan("spring.di.ui")
+@Configuration
+
+public class NewlecDIConfig {
+    // <bean id="exam" class="spring.di.entity.NewlecExam"/>
+    @Bean
+    public Exam exam(){ 
+        return new NewlecExam();
+    }
+}
+
+```
 
 
 ---
@@ -111,3 +139,4 @@ public void setExam(Exam exam) {
 Bean은 개발자가 IoC에 등록한 객체들이다.   
 IoC Container는 Bean의 관리를 도와주는 컨테이너이다.   
 Bean을 생성해서 Container에 등록하여 IoC 방식으로 운영하는 것이 많은 이점이 있기 때문에 존재한다.
+
