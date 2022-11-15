@@ -4,16 +4,22 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--스프링을 이용한 방법-->
+    <bean id="sampleAspect" class="spring.aop.advice.AnnoAspect" />
+    <aop:aspectj-autoproxy />
 
-    <bean id="target" class="spring.aop.entity.NewlecExam" p:kor="10" p:eng="1" p:com="1" p:math="1"/>
-
-    <bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice"/>
-    <bean id="logBeforeAdvice" class="spring.aop.advice.LogBeforeAdvice"/>
-    <bean id="logAfterRetuningAdvice" class="spring.aop.advice.LogAfterRetuningAdvice"/>
-    <bean id="logAfterThrowingAdvice" class="spring.aop.advice.LogAfterThrowingAdvice"/>
+<!--    <bean id="target" class="spring.aop.entity.NewlecExam" p:kor="10" p:eng="1" p:com="1" p:math="1"/>-->
+    <bean id="exam" class="spring.aop.entity.NewlecExam" p:kor="10" p:eng="1" p:com="1" p:math="1"/>
+<!--    <bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice"/>-->
+<!--    <bean id="logBeforeAdvice" class="spring.aop.advice.LogBeforeAdvice"/>-->
+<!--    <bean id="logAfterRetuningAdvice" class="spring.aop.advice.LogAfterRetuningAdvice"/>-->
+<!--    <bean id="logAfterThrowingAdvice" class="spring.aop.advice.LogAfterThrowingAdvice"/>-->
 
     <!-- 포인트컷 방식
     <bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
@@ -39,7 +45,7 @@
         </property>
     </bean>-->
 
-    <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+   <!-- <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice" ref="logBeforeAdvice"/>
         <property name="patterns" >
             <list>
@@ -57,13 +63,13 @@
         <property name="target" ref="target"/>
         <property name="interceptorNames">
             <list>
-<!--                <value>logAroundAdvice</value>-->
-<!--                <value>logBeforeAdvice</value>-->
+&lt;!&ndash;                <value>logAroundAdvice</value>&ndash;&gt;
+&lt;!&ndash;                <value>logBeforeAdvice</value>&ndash;&gt;
                 <value>classicAroundAdvice</value>
                 <value>classicBeforeAdvisor</value>
                 <value>logAfterRetuningAdvice</value>
                 <value>logAfterThrowingAdvice</value>
             </list>
         </property>
-    </bean>
+    </bean>-->
 </beans>

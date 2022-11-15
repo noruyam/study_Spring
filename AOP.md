@@ -149,5 +149,66 @@ public class Program {
     </property>
 </bean>
 ```
+
 ### 3. 어노테이션을 통한 구현 방법
-추후 업데이트 예정
+#### Aspectj 를 통한 구현 방법
+pom.xml Aspectj aop를 사용하기 위한 설정
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+    <version>2.7.4</version>
+</dependency>
+```
+setting.xml
+```xml
+<bean id="sampleAspect" class="spring.aop.advice.AnnoAspect" />
+<aop:aspectj-autoproxy /> 
+```
+```java
+@Component
+@Aspect // aspectj를 통한 이용방법
+public class AnnoAspect {
+    @Around("execution(* *(..))")
+    public Object Around(ProceedingJoinPoint pjp) throws Throwable {
+
+        long start = System.currentTimeMillis();
+        Object result = pjp.proceed();
+        long end = System.currentTimeMillis();
+        String message = (end - start) + "ms 시간이 걸렸습니다.";
+
+        System.out.println(message);
+        return result;
+    }
+}
+```
+xml파일을 완전히 없애고 싶다?
+```java
+@ComponentScan
+/*Configuration
+setting.xml 파일 대신 해당 자바클래스를 config 파일로 지정하겠다는 어노테이션.   
+main()에서 ApplicationContext를 생성해줄때 다음과 같이 생성
+ApplicationContext context = new AnnotationConfigApplicationContext(NewlecAOPConfig.class);
+*/
+@Configuration
+@EnableAspectJAutoProxy // <aop:aspectj-autoproxy /> => setting.xml에 있던 코드 대응해주는 어노테이션이다!
+public class NewlecAOPConfig {
+
+    @Bean
+    Exam exam(){
+        System.out.println("config!!!!");
+
+        return new NewlecExam();
+    }
+    
+    /* 
+    해당 클래스안에 @Component 선언하여 bean에 등록해주고 
+    @Aspect 를 통해  @Around("execution(* *(..))") 어디서 작동하게할지 지정만 해주면 알아서 작동해준다.
+    
+    @Bean
+    AnnoAspect annoAspect(){ //해당 클래스안에 이미 @EnableAspectJAutoProxy 통해서 @Aspect 어노테이션으로 선언했기때문에 중복으로 등록할 필요없다.
+        return new AnnoAspect();
+    }
+    */
+}
+```

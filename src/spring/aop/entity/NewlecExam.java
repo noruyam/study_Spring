@@ -1,8 +1,9 @@
 package spring.aop.entity;
 
-import spring.di.Exam;
+import org.springframework.stereotype.Component;
+import spring.aop.Exam;
 
-
+@Component("exam")
 public class NewlecExam implements Exam {
 
     private int kor;
@@ -55,7 +56,7 @@ public class NewlecExam implements Exam {
 
     @Override
     public int total() {
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         int result = kor + eng + math + com;
         if (kor > 100) {
             throw new IllegalArgumentException("유효하지 않은 국어점수");
@@ -65,9 +66,9 @@ public class NewlecExam implements Exam {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        long end = System.currentTimeMillis();
-        String message = (end - start) + "ms 시간이 걸렸습니다.";
-        System.out.println(message);
+//        long end = System.currentTimeMillis();
+//        String message = (end - start) + "ms 시간이 걸렸습니다.";
+//        System.out.println(message);
         return result;
     }
 
